@@ -1,5 +1,4 @@
-# A bare bones UI for chatbot using LLAMA-2 or other LLM
-# Created by Gary Xiao 09/06/2023
+# A chatbot using self-hosted LLAMA-2 or other LLM
 
 # import openai
 import streamlit as st
@@ -17,8 +16,6 @@ if "context_length" not in st.session_state:
 
 
 def main():
-    # Initialization your state messages
-
     st.sidebar.header("Settings")
 
     with st.sidebar:
@@ -39,7 +36,7 @@ def main():
     # A place to draw the chat history
     history = st.container()
 
-    # Change this url if it is changed
+    # Change this url if changed
     url = 'https://e94b-34-29-123-139.ngrok.io/chatbot'
 
 
@@ -56,6 +53,7 @@ def main():
 
             # Call the OpenAI API
             # r = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
+
             r = {
             'llm' : "llama-7b-chat",
             'temperature' : 0.3,
@@ -74,7 +72,6 @@ def main():
 
 
             st.session_state.messages.append(
-                # {"role": "assistant", "content": r["choices"][0]["message"]["content"]}
                  {"role": "assistant", "content": r["content"]}
             )
 
@@ -96,22 +93,10 @@ def main():
 # use streamlit_chat to set avatar styles:
 # supported styles: https://www.dicebear.com/styles
 
-# message(message, 
-#             is_user=False, 
-#             avatar_style="adventurer", # change this for different user icon
-#             seed=123, # or the seed for different user icons
-# )
+# Move this line outside of any function
+st.title("Chatbot based on self-hosted LLM")
 
-
-st.title("GPT Demo for Bluestem Brands")
-
-# set simple password of chatbot webapp to "hackathon" (no quote) for access authorization
-key = st.text_input("Your Password")
-if key != "hackathon":
-    st.error("Please input a valid password")
-
-else:
+# Call the main function
+if __name__ == "__main__":
     main()
 
-
-st.info("Created by Gary Xiao, for hackathon at Bluestem Brands")
